@@ -9,16 +9,17 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
-app.post('/payment', function(req, res){
+app.post('/payment',(req, res) => {
   console.log('payment request..', req.body)
   const token = req.body.stripeToken; // Using Express
+  const amount = req.body.amount; // Using Express
   //Charge the user's card:
   stripe.charges.create({
-    amount: 444,
+    amount: amount,
     currency: "usd",
     description: "test charge",
     source: token,
-  }, function(err, charge) {
+  },(err, charge) => {
     if(err) {
     console.log(err);
     res.send('Failed')
